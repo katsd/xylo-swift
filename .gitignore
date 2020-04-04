@@ -3,3 +3,8 @@
 /Packages
 /*.xcodeproj
 xcuserdata/
+
+# SwiftPM
+.swiftpm
+Package.resolved
+

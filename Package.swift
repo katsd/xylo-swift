@@ -1,28 +1,30 @@
 // swift-tools-version:5.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-    name: "xylo-swift",
+    name: "XyloSwift",
     products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
-            name: "xylo-swift",
-            targets: ["xylo-swift"]),
+            name: "XyloObjC",
+            targets: ["XyloObjC"]),
+        .library(
+            name: "XyloSwift",
+            targets: ["XyloSwift"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/katsd/xylo", .branch("master"))
+    
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "xylo-swift",
-            dependencies: []),
-        .testTarget(
-            name: "xylo-swiftTests",
-            dependencies: ["xylo-swift"]),
+            name : "XyloObjC",
+            dependencies: ["Xylo"],
+            path: "XyloObjC"
+        ),
+        .target(
+            name: "XyloSwift",
+            dependencies: ["XyloObjC"],
+            path: "XyloSwift"),
     ]
 )
