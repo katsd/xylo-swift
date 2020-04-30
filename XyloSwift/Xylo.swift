@@ -1,11 +1,11 @@
 import Foundation
 import xylo
 
-class Xylo {
+public class Xylo {
 
     let eval: UnsafeMutableRawPointer
 
-    init(source: String) {
+    public init(source: String) {
         eval = CreateXylo(source)
     }
 
@@ -13,11 +13,11 @@ class Xylo {
         free(eval)
     }
 
-    func run() {
+    public func run() {
         RunXylo(eval)
     }
 
-    func runFunc(name: String) {
+    public func runFunc(name: String) {
         RunXyloFunc(eval, name)
     }
 
