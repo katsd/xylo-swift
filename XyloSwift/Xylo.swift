@@ -8,7 +8,13 @@ public class Xylo {
 
         let argNum: UInt
 
-        let closure: @convention(c) (UnsafeMutablePointer<CObj>?, UInt) -> (CObj)
+        let closure: @convention(c) (UnsafeMutablePointer<CObj>?, UInt) -> CObj
+
+        public init(funcName: String, argNum: UInt, closure: @convention(c) @escaping (UnsafeMutablePointer<CObj>?, UInt) -> CObj) {
+            self.funcName = funcName
+            self.argNum = argNum
+            self.closure = closure
+        }
     }
 
     let eval: UnsafeMutableRawPointer
