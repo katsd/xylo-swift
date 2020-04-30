@@ -20,11 +20,11 @@ public class Xylo {
     let eval: UnsafeMutableRawPointer
 
     public init(source: String, funcs: [Func] = []) {
-        eval = CreateXylo(source)
-
         for fn in funcs {
             AddXyloFunc(eval, fn.funcName, fn.argNum, fn.closure)
         }
+
+        eval = CreateXylo(source)
     }
 
     deinit {
