@@ -21,7 +21,7 @@ public class Xylo {
 
     public init(source: String, funcs: [Func] = []) {
         for fn in funcs {
-            AddXyloFunc(eval, fn.funcName, fn.argNum, fn.closure)
+            AddXyloFunc(fn.funcName, fn.argNum, fn.closure)
         }
 
         eval = CreateXylo(source)
