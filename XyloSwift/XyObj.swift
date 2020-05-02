@@ -61,25 +61,13 @@ public struct XyObj {
 }
 
 extension XyObj {
-    private enum SwiftyCObjType: Int {
-        case int = 0
-
-        case float = 1
-
-        case string = 2
-
-        var cobjType: CObjType {
-            CObjType(UInt32(rawValue))
-        }
-    }
-
     init(_ cobj: CObj) {
         switch cobj.type {
-        case SwiftyCObjType.int.cobjType:
+        case INT:
             self.init(cobj.value.ival)
-        case SwiftyCObjType.float.cobjType:
+        case FLOAT:
             self.init(cobj.value.dval)
-        case SwiftyCObjType.string.cobjType:
+        case STRING:
             self.init(String(cString: cobj.value.str))
         default:
             self.init(0)
@@ -89,12 +77,12 @@ extension XyObj {
     func toCObj() -> CObj {
         switch value {
         case .int(let v):
-            return CObj(type: SwiftyCObjType.int.cobjType, value: CObjValue(ival: v))
+            return CObj(type: INT, value: CObjValue(ival: v))
         case .float(let v):
-            return CObj(type: SwiftyCObjType.float.cobjType, value: CObjValue(dval: v))
+            return CObj(type: FLOAT, value: CObjValue(dval: v))
         case .string(let v):
             return v.withCString { ptr in
-                CObj(type: SwiftyCObjType.string.cobjType, value: CObjValue(str: ptr))
+                CObj(type: STRING, value: CObjValue(str: ptr))
             }
         }
     }
