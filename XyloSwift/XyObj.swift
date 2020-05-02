@@ -22,6 +22,10 @@ public struct XyObj {
         self.value = .string(value)
     }
 
+    static var zero: XyObj {
+        self.init(0)
+    }
+
     public func int() -> Int {
         switch value {
         case .int(let v):
