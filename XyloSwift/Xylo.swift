@@ -35,8 +35,6 @@ public class Xylo {
 
         let selfPtr = Unmanaged<Xylo>.passUnretained(self).toOpaque()
 
-        yay()
-
         eval = CreateXylo(selfPtr, source, Xylo.callExtFuncClosure)
     }
 
@@ -64,10 +62,6 @@ public class Xylo {
     private func funcData2Key(funcName: String, argNum: UInt) -> String {
         funcName + String(argNum)
     }
-}
-
-func yay() {
-
 }
 
 func CallExtFunc(extXyloInstance: UnsafeRawPointer?, funcName: UnsafePointer<Int8>?, argNum: UInt, args: UnsafeMutablePointer<CObj>?) -> CObj {
