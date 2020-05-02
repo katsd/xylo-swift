@@ -22,7 +22,7 @@ public struct XyObj {
         self.value = .string(value)
     }
 
-    static var zero: XyObj {
+    static public var zero: XyObj {
         self.init(0)
     }
 
