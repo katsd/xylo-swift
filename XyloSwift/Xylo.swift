@@ -31,7 +31,7 @@ public class Xylo {
 
         let selfPtr = Unmanaged<Xylo>.passUnretained(self).toOpaque()
 
-        eval = CreateXylo(selfPtr, source, CallFunc)
+        eval = CreateXylo(selfPtr, source, CallExtFunc)
     }
 
     deinit {
@@ -61,21 +61,21 @@ public class Xylo {
 
 }
 
-func CallFunc(extXyloInstance: UnsafeRawPointer?, funcName: UnsafePointer<Int8>?, argNum: UInt, args: UnsafeMutablePointer<CObj>?) -> CObj {
+func CallExtFunc(extXyloInstance: UnsafeRawPointer?, funcName: UnsafePointer<Int8>?, argNum: UInt, args: UnsafeMutablePointer<CObj>?) -> CObj {
     let cobjZero = CObj(type: CObjType(0), value: CObjValue(ival: 0))
 
-    guard let extXyloInstance = extXyloInstance else {
+    guard let extXyloInstance = extXyloInstance, let funcName = funcName else {
         return cobjZero
     }
 
     let xylo = Unmanaged<Xylo>.fromOpaque(extXyloInstance).takeUnretainedValue()
 
-    var sargs = [XyObj]()
+    var sArgs = [XyObj]()
     for i in 0..<argNum {
-        sargs.append(XyObj(args?.advanced(by: Int(i)).pointee ?? cobjZero))
+        sArgs.append(XyObj(args?.advanced(by: Int(i)).pointee ?? cobjZero))
     }
 
-    let res = xylo.runExtFunc(funcName: String(cString: funcName ?? ""), args: sargs)
+    let res = xylo.runExtFunc(funcName: String(cString: funcName), args: sArgs)
 
     return res.toCObj()
 }
