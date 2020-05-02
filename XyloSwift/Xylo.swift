@@ -21,6 +21,10 @@ public class Xylo {
 
     var extFuncs = Dictionary<String, ([XyObj]) -> XyObj>()
 
+    let callExtFuncClosure: @convention(c) (UnsafeRawPointer?, UnsafePointer<Int8>?, UInt, UnsafeMutablePointer<CObj>?) -> CObj = {
+        Xylo.callExtFunc(extXyloInstance: $0, funcName: $1, argNum: $2, args: $3)
+    }
+
     public init(source: String, funcs: [Func] = []) {
         DeleteAllXyloFunc()
 
@@ -30,10 +34,6 @@ public class Xylo {
         }
 
         let selfPtr = Unmanaged<Xylo>.passUnretained(self).toOpaque()
-
-        let callExtFuncClosure: @convention(c) (UnsafeRawPointer?, UnsafePointer<Int8>?, UInt, UnsafeMutablePointer<CObj>?) -> CObj = {
-            Xylo.callExtFunc(extXyloInstance: $0, funcName: $1, argNum: $2, args: $3)
-        }
 
         eval = CreateXylo(selfPtr, source, callExtFuncClosure)
     }
